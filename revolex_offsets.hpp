@@ -1,0 +1,56 @@
+#pragma once
+
+#include <array>
+#include <cstddef>
+#include <cstdint>
+
+namespace revolex {
+
+inline constexpr std::uintptr_t kLoginStateRva = 0x723954;
+inline constexpr std::uintptr_t kReadyStateRva = 0x723A2C;
+inline constexpr std::uintptr_t kRunProgramStateRva = 0x723951;
+inline constexpr std::uintptr_t kShutdownRva = 0x1006B0;
+inline constexpr std::uintptr_t kMemberRva = 0x7239B8;
+inline constexpr std::uintptr_t kExpiryRva = 0x7239E0;
+
+inline constexpr std::array<std::uint8_t, 3> kLoginState{0x01, 0x01, 0x01};
+inline constexpr std::array<std::uint8_t, 2> kReadyState{0x01, 0x01};
+inline constexpr std::array<std::uint8_t, 3> kRunProgramState{0x01, 0x01, 0x01};
+inline constexpr std::array<std::uint8_t, 16> kShutdownExpected{
+    0x73, 0x68, 0x75, 0x74, 0x64, 0x6F, 0x77, 0x6E,
+    0x20, 0x2F, 0x72, 0x20, 0x2F, 0x66, 0x20, 0x2F
+};
+inline constexpr std::array<std::uint8_t, 16> kShutdownReplacement{
+    0x73, 0x68, 0x75, 0x74, 0x64, 0x6F, 0x77, 0x6E,
+    0x20, 0x2F, 0x61, 0x00, 0x00, 0x00, 0x00, 0x00
+};
+
+struct BranchPatch {
+    const char* name;
+    std::uintptr_t rva;
+    std::array<std::uint8_t, 6> expected;
+    std::array<std::uint8_t, 6> replacement;
+};
+
+inline constexpr std::array<BranchPatch, 3> kBranchPatches{{
+    {
+        "Premium",
+        0x4B2AF47,
+        {0x0F, 0x85, 0xD9, 0x47, 0xFF, 0xFF},
+        {0xE9, 0xDA, 0x47, 0xFF, 0xFF, 0x90}
+    },
+    {
+        "Keybind",
+        0x4AEF2EF,
+        {0x0F, 0x85, 0xF3, 0xB2, 0x58, 0xFB},
+        {0xE9, 0xF4, 0xB2, 0x58, 0xFB, 0x90}
+    },
+    {
+        "Main",
+        0x4A500A8,
+        {0x0F, 0x85, 0xA2, 0x61, 0x62, 0xFB},
+        {0xE9, 0xA3, 0x61, 0x62, 0xFB, 0x90}
+    }
+}};
+
+}
