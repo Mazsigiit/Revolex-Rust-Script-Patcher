@@ -7,4 +7,8 @@ VT For Release Patcher: https://www.virustotal.com/gui/file/299becdeec442d9f1322
 
 Video:
 
+
+https://github.com/user-attachments/assets/115bdfe3-6a58-4bd4-abc2-aa591d059fb9
+
+
 If you have any questions, feel free to reach out on Discord: #aloszam
